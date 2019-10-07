@@ -1,0 +1,10 @@
+name: Sbubby
+main: net.jasonstone.sbubby.Trains
+version: 1.0
+commands:
+  ticket:
+    description: Set your destination.
+    usage: "Usage: /ticket [destination_station]"
+  rail:
+    description: Change the direction of the targeted rail.
+    usage: "Usage: /rail [new_direction]"
