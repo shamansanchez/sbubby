@@ -37,14 +37,15 @@ public class TicketCommand implements CommandExecutor, TabCompleter {
 		Yaml yaml = new Yaml();
 		try {
 			@SuppressWarnings("unchecked")
-			Map<String, Map<String, Integer>> map = (Map<String, Map<String, Integer>>) yaml
+
+			Map<String, Map<String, Map<String, Integer>>> map = (Map<String, Map<String, Map<String, Integer>>>) yaml
 					.load(new FileReader(plugin.getDataFolder() + File.separator + "sbubby.yml"));
 
 			if (!map.containsKey(args[0])) {
 				return false;
 			}
 
-			Map<String, Integer> switches = map.get(args[0]);
+			Map<String, Integer> switches = map.get(args[0]).get("switches");
 
 			ArrayList<String> currentTags = new ArrayList<String>(player.getScoreboardTags());
 			for (String tag : currentTags) {
@@ -75,7 +76,7 @@ public class TicketCommand implements CommandExecutor, TabCompleter {
 
 		try {
 			@SuppressWarnings("unchecked")
-			Map<String, Object> map = (Map<String, Object>) yaml
+			Map<String, Map<String, Map<String, Integer>>> map = (Map<String, Map<String, Map<String, Integer>>>) yaml
 					.load(new FileReader(plugin.getDataFolder() + File.separator + "sbubby.yml"));
 			ArrayList<String> commands = new ArrayList<String>();
 

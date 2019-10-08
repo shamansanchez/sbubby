@@ -67,8 +67,6 @@ public class Switch {
 		try {
 			_getData();
 		} catch (ClassCastException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			return;
 		}
 
@@ -84,7 +82,6 @@ public class Switch {
 		try {
 			_getData();
 		} catch (ClassCastException e) {
-			e.printStackTrace();
 			return;
 		}
 
@@ -117,6 +114,10 @@ public class Switch {
 		Player closestPlayer = null;
 		for (Player p : Bukkit.getOnlinePlayers()) {
 			Location playerLocation = p.getLocation();
+
+			if (playerLocation.getWorld() != world) {
+				continue;
+			}
 
 			if (playerLocation.distance(center) < closest) {
 				closestPlayer = p;

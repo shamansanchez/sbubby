@@ -66,8 +66,8 @@ public final class Trains extends JavaPlugin {
 							int score = player.getScoreboard().getObjective(switchName)
 									.getScore(player.getPlayerListName()).getScore();
 
-							logger.log(Level.INFO, player.toString());
-							logger.log(Level.INFO, sw.toString());
+//							logger.log(Level.INFO, player.toString());
+//							logger.log(Level.INFO, sw.toString());
 
 							sw.reset();
 							sw.setDirection(score);
@@ -83,5 +83,43 @@ public final class Trains extends JavaPlugin {
 			}
 		}, 0, 10);
 
+		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				Yaml yaml = new Yaml();
+				try {
+					@SuppressWarnings("unchecked")
+					Map<String, Map<String, Map<String, Integer>>> stationMap = (Map<String, Map<String, Map<String, Integer>>>) yaml
+							.load(new FileReader(getDataFolder() + File.separator + "sbubby.yml"));
+
+					Set<String> stations = stationMap.keySet();
+
+					for (String stationName : stations) {
+
+						Station station = new Station(stationName, stationMap.get(stationName).get("pos").get("x"),
+								stationMap.get(stationName).get("pos").get("y"),
+								stationMap.get(stationName).get("pos").get("z"));
+
+						Player player = station.getClosestPlayer();
+
+						if (player == null) {
+							return;
+						}
+
+						boolean power = !player.getScoreboardTags().contains(stationName);
+
+//						logger.log(Level.INFO, player.toString());
+//						logger.log(Level.INFO, station.toString());
+
+						station.SetPowered(power);
+
+					}
+
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
+		}, 0, 10);
 	}
 }
